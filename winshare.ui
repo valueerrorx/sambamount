@@ -63,7 +63,8 @@
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="icon">
-       <iconset theme="tag"/>
+       <iconset theme="tag">
+        <normaloff>.</normaloff>.</iconset>
       </attribute>
       <attribute name="title">
        <string>Zugangsdaten</string>
@@ -171,7 +172,7 @@
              </sizepolicy>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::ClickFocus</enum>
+             <enum>Qt::TabFocus</enum>
             </property>
             <property name="styleSheet">
              <string notr="true">background-color: rgba(0,200,70,0.4);</string>
@@ -180,7 +181,8 @@
              <string>Verbinden</string>
             </property>
             <property name="icon">
-             <iconset theme="folder-sync"/>
+             <iconset theme="folder-sync">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>
@@ -191,7 +193,8 @@
      </widget>
      <widget class="QWidget" name="advanced">
       <attribute name="icon">
-       <iconset theme="configure"/>
+       <iconset theme="configure">
+        <normaloff>.</normaloff>.</iconset>
       </attribute>
       <attribute name="title">
        <string>Einstellungen</string>
@@ -315,7 +318,11 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="mountpoint"/>
+           <widget class="QLineEdit" name="mountpoint">
+            <property name="toolTip">
+             <string>Dieser Ordner wird bei Bedarf im Homeverzeichnis erstellt</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -347,7 +354,8 @@
              <string>Speichern</string>
             </property>
             <property name="icon">
-             <iconset theme="document-save"/>
+             <iconset theme="document-save">
+              <normaloff>.</normaloff>.</iconset>
             </property>
            </widget>
           </item>
@@ -386,7 +394,8 @@
          <string>Abbrechen</string>
         </property>
         <property name="icon">
-         <iconset theme="window-close"/>
+         <iconset theme="window-close">
+          <normaloff>.</normaloff>.</iconset>
         </property>
         <property name="flat">
          <bool>false</bool>
@@ -398,6 +407,19 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>benutzer</tabstop>
+  <tabstop>passwort</tabstop>
+  <tabstop>verbinden</tabstop>
+  <tabstop>exit</tabstop>
+  <tabstop>radioButton1</tabstop>
+  <tabstop>radioButton2</tabstop>
+  <tabstop>radioButton3</tabstop>
+  <tabstop>server</tabstop>
+  <tabstop>freigabe</tabstop>
+  <tabstop>mountpoint</tabstop>
+  <tabstop>speichern</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>
@@ -407,12 +429,12 @@
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>332</x>
-     <y>167</y>
+     <x>95</x>
+     <y>50</y>
     </hint>
     <hint type="destinationlabel">
-     <x>292</x>
-     <y>128</y>
+     <x>95</x>
+     <y>49</y>
     </hint>
    </hints>
   </connection>
@@ -423,12 +445,12 @@
    <slot>setDisabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>327</x>
-     <y>197</y>
+     <x>95</x>
+     <y>50</y>
     </hint>
     <hint type="destinationlabel">
-     <x>292</x>
-     <y>128</y>
+     <x>95</x>
+     <y>49</y>
     </hint>
    </hints>
   </connection>
@@ -439,12 +461,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>342</x>
-     <y>227</y>
+     <x>95</x>
+     <y>50</y>
     </hint>
     <hint type="destinationlabel">
-     <x>292</x>
-     <y>128</y>
+     <x>95</x>
+     <y>49</y>
     </hint>
    </hints>
   </connection>
