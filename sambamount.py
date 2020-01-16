@@ -123,6 +123,7 @@ class MeinDialog(QtWidgets.QDialog):
         
         if not os.path.isdir(mountpoint):
             os.makedirs(mountpoint)
+            os.chown(mountpoint,int(UID),int(UID))
         
    
         if self.checkUsername(benutzername) and self.checkPW(passwort):
