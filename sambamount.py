@@ -47,7 +47,7 @@ class MeinDialog(QtWidgets.QDialog):
       
         #check for root permissions 
         if os.geteuid() != 0:
-            print ("You need root access in order to create a live USB device")
+            print ("You need root access in order to mount a network folder")
             command = "pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY KDE_FULL_SESSION=true  %s" % (os.path.abspath(__file__))
             self.ui.close()
             os.system(command)
@@ -126,11 +126,11 @@ class MeinDialog(QtWidgets.QDialog):
                 print(command)
                 os.system(command)
                 
-                command="exec dolphin %s &" %(freigabename)
+                command="exec dolphin %s &" %(mountpoint)
                 os.system(command)
                # self.ui.close()
 
-   
+                #TODO  check if mount was successfull
     
 
 
