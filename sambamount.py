@@ -6,10 +6,12 @@ from PyQt5.QtGui import *
 import configparser
 import subprocess
 from subprocess import PIPE, run
+import time 
+
 
 USER = subprocess.check_output("logname", shell=True).rstrip().decode()
+UID = subprocess.check_output(f"id -u {USER}", shell=True).rstrip().decode()
 USER_HOME_DIR = os.path.join("/home", str(USER));
-
 
 class MeinDialog(QtWidgets.QDialog):
     def __init__(self):
@@ -50,13 +52,10 @@ class MeinDialog(QtWidgets.QDialog):
             print ("You need root access in order to mount a network folder")
             command = "pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY KDE_FULL_SESSION=true  %s" % (os.path.abspath(__file__))
             self.ui.close()
-            self.startcommand(command)
+            os.system(command)
             os._exit(0)
       
-    def startcommand(self,command):
-        command = "pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY KDE_FULL_SESSION=true  %s" % (command)
-        os.system(command)
-      
+
       
     def saveConfig(self):
         if self.ui.radioButton1.isChecked():
@@ -136,9 +135,9 @@ class MeinDialog(QtWidgets.QDialog):
                 freigabename = self.ui.freigabe.text()
         
             #connect
-            command = ["pkexec", "mount", "-t", "cifs","-o",f"user={benutzername},password='{passwort}'",f"//{server}/{freigabename}", f"/{mountpoint}"] 
+            self.ui.status.setText("Verbindung angefordert")
+            command = ["sudo","mount", "-t", "cifs","-o",f"rw,user={benutzername},password='{passwort}',uid={UID},gid={UID}",f"//{server}/{freigabename}", f"/{mountpoint}"] 
             result = run(command, stdout=PIPE, stderr=PIPE, universal_newlines=True)
-            self.openFilemanager(mountpoint)
             
         else:
             self.ui.status.setText("Bitte überprüfen sie die Anmeldedaten")
@@ -148,13 +147,14 @@ class MeinDialog(QtWidgets.QDialog):
 
         if result:
             print(result.stderr)
-            print("-----------------")
-            
-            if ("mount error" in result.stderr):
-                self.ui.status.setText("Netzlaufwerk nicht gefunden")
-            if ( "password" in  result.stderr):
+
+            if ( "error" in  result.stderr):
                 self.ui.status.setText("Fehlerhafte Anmeldedaten")
-                
+            else:
+                self.ui.status.setText("Verbindung hergestellt")
+                time.sleep(2)
+                self.openFilemanager(mountpoint)
+            
 
 
 
@@ -162,8 +162,7 @@ class MeinDialog(QtWidgets.QDialog):
 
 
     def openFilemanager(self, mountpoint):
-        self.ui.status.setText("Verbindung angefordert")
-        command="sudo -H -u %s dolphin %s " %(USER, mountpoint)
+        command="sudo -H -u %s dolphin %s > /dev/null 2>&1" %(USER, mountpoint)
         os.system(command)
 
 

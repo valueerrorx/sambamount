@@ -1,6 +1,6 @@
 [default]
-sharetype = 2
-server = 10.1.1.2
+sharetype = 3
+server = 10.0.0.111
 customshare = Zeug
 mountpoint = NETZLAUFWERK
 
