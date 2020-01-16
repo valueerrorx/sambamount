@@ -74,7 +74,7 @@ class MeinDialog(QtWidgets.QDialog):
       
 
     def checkPW(self,pw):
-        if not pw.isspace() and not (' ' in pw) == True:
+        if not pw.isspace() and not (' ' in pw) == True and pw != "":
             palettedefault = self.ui.passwort.palette()
             palettedefault.setColor(QPalette.Active, QPalette.Base, QColor(255, 255, 255))
             self.ui.passwort.setPalette(palettedefault)
@@ -95,43 +95,57 @@ class MeinDialog(QtWidgets.QDialog):
 
 
     def verbinden(self):
-        print("verbinden")
-        self.ui.status.setText("Verbindung angefordert")
+
+        self.ui.status.setText("Anmeldedaten holen")
         server = self.ui.server.text()
         benutzername = self.ui.benutzer.text()
         passwort = self.ui.passwort.text()
         mountpoint = self.ui.mountpoint.text()
         mountpoint = os.path.join(USER_HOME_DIR, mountpoint)
-        
+   
         if not os.path.isdir(mountpoint):
             os.makedirs(mountpoint)
         
-        
-        freigabename = ""
-        if self.ui.radioButton1.isChecked() and self.checkPW(benutzername) and benutzername:
-                freigabename = "%s$" %(benutzername)
-        elif self.ui.radioButton2.isChecked():
-            if self.checkPW(benutzername):
-                freigabename = benutzername
-        elif self.ui.radioButton3.isChecked():
-            freigabename =  self.ui.freigabe.text()
-            
-            
-        if self.checkPW(passwort):
-            #connect
-            if self.checkPW(benutzername) and benutzername:
-                #command="exec dolphin smb://%s:%s@%s/%s &" %(benutzername,passwort,server,freigabename)
-                
-                command="sudo mount -t cifs -o user=%s,password=%s //%s/%s /%s"   %(benutzername, passwort, server, freigabename, mountpoint )
+        if self.ui.radioButton1.isChecked() or  self.ui.radioButton2.isChecked():   #we neet username and password
+            if self.checkPW(benutzername) and self.checkPW(passwort):
+                freigabename = ""
+                if self.ui.radioButton1.isChecked():
+                    freigabename = benutzername
+                elif self.ui.radioButton2.isChecked():
+                    freigabename = "%s$" %(benutzername)
+          
+                #connect
+                command="sudo mount -t cifs -o user=%s,password='%s' //%s/%s /%s"   %(benutzername, passwort, server, freigabename, mountpoint )
                 print(command)
                 os.system(command)
+                self.openFilemanager(mountpoint)
                 
-                command="exec dolphin %s &" %(mountpoint)
-                os.system(command)
-               # self.ui.close()
+            else:
+                self.ui.status.setText("Bitte überprüfen sie die Anmeldedaten")
+        
+        elif self.ui.radioButton3.isChecked(): #ohne benutzerkennung
+            freigabename =  self.ui.freigabe.text()
 
-                #TODO  check if mount was successfull
-    
+            if self.checkPW(benutzername) and self.checkPW(passwort):
+                command="sudo mount -t cifs -o user=%s,password='%s' //%s/%s /%s"   %(benutzername, passwort, server, freigabename, mountpoint )
+                print(command)
+                os.system(command)
+                self.openFilemanager(mountpoint)
+            elif benutzername == "" and passwort == "":
+                command="sudo mount -t cifs //%s/%s /%s"   %(server, freigabename, mountpoint )
+                print(command)
+                os.system(command)
+                self.openFilemanager(mountpoint)
+            else:
+                self.ui.status.setText("Bitte überprüfen sie die Anmeldedaten")
+
+
+
+
+    def openFilemanager(self, mountpoint):
+        self.ui.status.setText("Verbindung angefordert")
+        command="sudo -H -u %s dolphin %s &" %(USER, mountpoint)
+        os.system(command)
 
 
 
