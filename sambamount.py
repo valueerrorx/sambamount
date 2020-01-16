@@ -123,9 +123,11 @@ class MeinDialog(QtWidgets.QDialog):
                 #command="exec dolphin smb://%s:%s@%s/%s &" %(benutzername,passwort,server,freigabename)
                 
                 command="sudo mount -t cifs -o user=%s,password=%s //%s/%s /%s"   %(benutzername, passwort, server, freigabename, mountpoint )
-
                 print(command)
-               # os.system(command)
+                os.system(command)
+                
+                command="exec dolphin %s &" %(freigabename)
+                os.system(command)
                # self.ui.close()
 
    
