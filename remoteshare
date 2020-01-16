@@ -1,0 +1,2 @@
+#!/bin/bash
+sudo /home/student/.life/applications/sambamount/sambamount.py
