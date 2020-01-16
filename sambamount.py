@@ -147,6 +147,9 @@ class MeinDialog(QtWidgets.QDialog):
         
 
         if result:
+            print(result.stderr)
+            print("-----------------")
+            
             if ("mount error" in result.stderr):
                 self.ui.status.setText("Netzlaufwerk nicht gefunden")
             if ( "password" in  result.stderr):
