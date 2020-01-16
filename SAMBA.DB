@@ -1,0 +1,6 @@
+[default]
+sharetype = 3
+server = 10.1.1.2
+customshare = marie
+mountpoint = NETZLAUFWERK
+
