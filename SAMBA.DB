@@ -1,6 +1,6 @@
 [default]
-sharetype = 3
-server = 10.0.0.111
+sharetype = 2
+server = 10.1.1.102
 customshare = Zeug
-mountpoint = NETZLAUFWERK
+mountpoint = Downloads
 
