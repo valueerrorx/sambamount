@@ -137,7 +137,8 @@ class MeinDialog(QtWidgets.QDialog):
         
             #connect
             self.ui.status.setText("Verbindung angefordert")
-            command = ["sudo","mount", "-t", "cifs","-o",f"rw,user='{benutzername}',password='{passwort}',uid={UID},gid={UID}",f"//{server}/{freigabename}", f"{mountpoint}"] 
+            command = ["sudo", "mount", "-t", "cifs", "-o", f"user={benutzername}", "-o", f"password={passwort}", "-o", f"uid={UID}", "-o", f"gid={UID}", f"//{server}/{freigabename}", f"{mountpoint}"] 
+ 
             print(command)
             result = run(command, stdout=PIPE, stderr=PIPE, universal_newlines=True)
             
