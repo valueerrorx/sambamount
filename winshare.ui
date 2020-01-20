@@ -7,8 +7,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>390</width>
-    <height>510</height>
+    <width>365</width>
+    <height>542</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -356,6 +356,16 @@
              <string>Dieser Ordner wird bei Bedarf im Homeverzeichnis erstellt</string>
             </property>
            </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_8">
+            <property name="text">
+             <string>Domäne</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="domain"/>
           </item>
          </layout>
         </widget>

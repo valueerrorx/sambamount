@@ -120,7 +120,10 @@ class MeinDialog(QtWidgets.QDialog):
         mountpoint = self.ui.mountpoint.text()
         mountpoint = os.path.join(USER_HOME_DIR, mountpoint)
         freigabename = self.ui.freigabe.text()
+        domain = self.ui.domain.text()
+        
         result = False
+        
         
         if self.checkMount():
             self.ui.status.setText("Netzlaufwerk bereits eingebunden")
@@ -140,7 +143,7 @@ class MeinDialog(QtWidgets.QDialog):
                 freigabename = self.ui.freigabe.text()
 
             self.ui.status.setText("Verbindung angefordert")
-            command = ["sudo", "mount", "-t", "cifs", "-o", f"user={benutzername}", "-o", f"password={passwort}", "-o", f"uid={UID}", "-o", f"gid={UID}", f"//{server}/{freigabename}", f"{mountpoint}"] 
+            command = ["sudo", "mount", "-t", "cifs", "-o", f"user={benutzername}", "-o", f"password={passwort}", "-o", f"domain={domain}", "-o", f"uid={UID}", "-o", f"gid={UID}", f"//{server}/{freigabename}", f"{mountpoint}"] 
             print(command)
             result = run(command, stdout=PIPE, stderr=PIPE, universal_newlines=True)
             
