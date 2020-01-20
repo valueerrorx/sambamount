@@ -365,7 +365,11 @@
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="domain"/>
+           <widget class="QLineEdit" name="domain">
+            <property name="toolTip">
+             <string>optional</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
