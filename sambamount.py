@@ -77,7 +77,10 @@ class MeinDialog(QtWidgets.QDialog):
         mountpoint = os.path.join(USER_HOME_DIR, mountpoint)
         p1 = run(["umount",f"{mountpoint}"], stdout=PIPE, stderr=PIPE, universal_newlines=True)
         print(p1)
-        time.sleep(2)
+        time.sleep(1)
+        command="xdotool search --onlyvisible --classname plasmashell windowactivate && xdotool key F5"
+        os.system(command)
+        time.sleep(1)
         self.checkMount()
 
 
@@ -201,8 +204,12 @@ class MeinDialog(QtWidgets.QDialog):
 
 
     def openFilemanager(self, mountpoint):
-        command="sudo -H -u %s dolphin %s > /dev/null 2>&1" %(USER, mountpoint)
+        command="xdotool search --onlyvisible --classname plasmashell windowactivate && xdotool key F5"
         os.system(command)
+        time.sleep(1)
+        command="sudo -H -u %s dolphin %s & > /dev/null 2>&1" %(USER, mountpoint)
+        os.system(command)
+
 
     def onAbbrechen(self):    # Exit button
         print("GUI closed")
