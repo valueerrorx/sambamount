@@ -221,7 +221,6 @@ class MeinDialog(QtWidgets.QDialog):
         for application_id in app_id_list:  # try to invoke ctrl+s on the running apps
             command = "xdotool windowactivate %s && xdotool key F5 &" % (application_id)
             os.system(command)
-            time.sleep(1)
             os.system(command)
             print("F5 sent to %s" % (application_id) )
 
