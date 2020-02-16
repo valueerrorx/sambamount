@@ -205,9 +205,9 @@ class MeinDialog(QtWidgets.QDialog):
 
     def openFilemanager(self, mountpoint):
         self.reloadDesktop()
-        time.sleep(1)
         command="sudo -H -u %s dolphin %s & > /dev/null 2>&1" %(USER, mountpoint)
         os.system(command)
+        self.reloadDesktop()
 
 
 
