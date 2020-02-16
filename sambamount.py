@@ -78,9 +78,7 @@ class MeinDialog(QtWidgets.QDialog):
         p1 = run(["umount",f"{mountpoint}"], stdout=PIPE, stderr=PIPE, universal_newlines=True)
         print(p1)
         time.sleep(1)
-        command="xdotool search --onlyvisible --classname plasmashell windowactivate && xdotool key F5"
-        os.system(command)
-        time.sleep(1)
+        self.reloadDesktop()
         self.checkMount()
 
 
@@ -204,11 +202,31 @@ class MeinDialog(QtWidgets.QDialog):
 
 
     def openFilemanager(self, mountpoint):
-        command="xdotool search --onlyvisible --classname plasmashell windowactivate && xdotool key F5"
-        os.system(command)
+        self.reloadDesktop()
         time.sleep(1)
         command="sudo -H -u %s dolphin %s & > /dev/null 2>&1" %(USER, mountpoint)
         os.system(command)
+
+
+
+    def reloadDesktop(self):
+        command = "xdotool search --classname plasmashell &"
+        app_id_list = []
+        app_ids = subprocess.check_output(command, shell=True).decode().rstrip()
+        if app_ids:
+            app_ids = app_ids.split('\n')
+            for app_id in app_ids:
+                app_id_list.append(app_id)
+
+        for application_id in app_id_list:  # try to invoke ctrl+s on the running apps
+            command = "xdotool windowactivate %s && xdotool key F5 &" % (application_id)
+            os.system(command)
+            time.sleep(1)
+            os.system(command)
+            print("F5 sent to %s" % (application_id) )
+
+
+
 
 
     def onAbbrechen(self):    # Exit button
