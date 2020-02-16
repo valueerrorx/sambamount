@@ -77,6 +77,8 @@ class MeinDialog(QtWidgets.QDialog):
         mountpoint = os.path.join(USER_HOME_DIR, mountpoint)
         p1 = run(["umount",f"{mountpoint}"], stdout=PIPE, stderr=PIPE, universal_newlines=True)
         print(p1)
+        p1 = run(["umount","-l",f"{mountpoint}"], stdout=PIPE, stderr=PIPE, universal_newlines=True)
+        print(p1)
         time.sleep(1)
         self.reloadDesktop()
         self.checkMount()
